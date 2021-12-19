@@ -16,3 +16,5 @@ This project has been implemented to demonstrate how we can utilize the web sock
 Users list has been scopped to the group level where you are using the chat widget
 
 ###### Demo
+
+![](https://github.com/mahmoudhtayem87/LiferayChat/raw/master/resources/demo.gif)
