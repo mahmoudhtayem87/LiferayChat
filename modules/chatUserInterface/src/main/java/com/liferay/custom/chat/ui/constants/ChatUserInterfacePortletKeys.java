@@ -1,7 +1,7 @@
 package com.liferay.custom.chat.ui.constants;
 
 /**
- * @author danasoftmobileapplications
+ * @author Mahmoud Hussein Tayem
  */
 public class ChatUserInterfacePortletKeys {
 

@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 import java.util.List;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Mahmoud Hussein Tayem
  */
 @Component(
 	property = {

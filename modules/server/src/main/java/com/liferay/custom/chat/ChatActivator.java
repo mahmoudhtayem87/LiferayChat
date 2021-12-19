@@ -10,7 +10,9 @@ import javax.servlet.ServletContext;
 import javax.websocket.Endpoint;
 import java.util.Dictionary;
 import java.util.Hashtable;
-
+/*
+ * @author Mahmoud Hussein Tayem
+ * */
 @Component(immediate = true)
 public class ChatActivator implements org.osgi.framework.BundleActivator {
     private ServiceRegistration<ServletContext> servletContextServiceRegistration;

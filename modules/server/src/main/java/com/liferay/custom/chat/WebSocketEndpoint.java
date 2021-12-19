@@ -30,7 +30,9 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-
+/*
+ * @author Mahmoud Hussein Tayem
+* */
 @Component(immediate = true, service = Endpoint.class,
         property = {"org.osgi.http.websocket.endpoint.path=/o/lrchat/{username}"}
 )

@@ -18,7 +18,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author danasoftmobileapplications
+ * @author Mahmoud Hussein Tayem
  */
 @Component(
 	immediate = true,

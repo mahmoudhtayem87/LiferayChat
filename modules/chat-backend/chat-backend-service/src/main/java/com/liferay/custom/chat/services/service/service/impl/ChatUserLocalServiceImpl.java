@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Mahmoud Hussein Tayem
  */
 @Component(
 	property = "model.class.name=com.liferay.custom.chat.services.service.model.ChatUser",
