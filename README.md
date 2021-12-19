@@ -11,3 +11,10 @@ This project has been implemented to demonstrate how we can utilize the web sock
 - Add the unread messages counter
 - Enhance the user interface
 - Secure the service builder apis.
+
+> Note:
+Users list has been scopped to the group level where you are using the chat widget
+
+###### Demo
+
+![](https://github.com/mahmoudhtayem87/LiferayChat/raw/ee49e319aa4ff7f8d19aefd8dd2742955bb29c25/resources/Screen-Recording-2021-12-19-at-1.gif)
