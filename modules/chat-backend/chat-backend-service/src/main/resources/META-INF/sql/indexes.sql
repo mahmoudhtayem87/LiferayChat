@@ -1,0 +1,1 @@
+create index IX_5219161F on CHAT_Message (toUserId, fromUserId);

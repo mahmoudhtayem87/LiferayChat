@@ -1,0 +1,11 @@
+dependencies {
+	compile project(":modules:chat-backend:chat-backend-api")
+
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+}
+
+buildService {
+	apiDir = "../chat-backend-api/src/main/java"
+}
+
+group = "com.liferay.custom.chat.services.service"

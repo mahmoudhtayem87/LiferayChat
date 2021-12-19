@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.4.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_4_0.dtd">
+<service-builder dependency-injector="ds" package-path="com.liferay.custom.chat.services.service">
+	<namespace>CHAT</namespace>
+	<!--<entity data-source="sampleDataSource" local-service="true" name="Foo" remote-service="false" session-factory="sampleSessionFactory" table="foo" tx-manager="sampleTransactionManager uuid="true"">-->
+	<entity name="Message" local-service="true">
+
+		<!-- PK fields -->
+
+		<column name="messageId" primary="true" type="long"></column>
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="toUserId" type="long"></column>
+		<column name="fromUserId" type="long"></column>
+		<column name="messageType" type="String"></column>
+		<column name="messageText" type="String"></column>
+		<finder name="MessagesBetween" return-type="Collection">
+			<finder-column name="toUserId"></finder-column>
+			<finder-column name="fromUserId"></finder-column>
+		</finder>
+
+		<!-- References -->
+		<reference entity="Group" package-path="com.liferay.portal"></reference>
+		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset"></reference>
+		<reference entity="AssetLink" package-path="com.liferay.portlet.asset"></reference>
+		<reference entity="AssetTag" package-path="com.liferay.portlet.asset"></reference>
+	</entity>
+	<entity name="ChatUser" local-service="true">
+		<column name="userId" type="long" primary="true"></column>
+		<column name="fullName" type="String"></column>
+		<column name="avatar" type="String"></column>
+	</entity>
+</service-builder>

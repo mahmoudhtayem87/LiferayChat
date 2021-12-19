@@ -1,0 +1,3 @@
+Bundle-Name: server
+Bundle-SymbolicName: com.liferay.custom.chat
+Bundle-Version: 1.0.0

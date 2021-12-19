@@ -1,0 +1,10 @@
+Bundle-Name: chat-backend-api
+Bundle-SymbolicName: com.liferay.custom.chat.services.service.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.custom.chat.services.service.exception,\
+	com.liferay.custom.chat.services.service.model,\
+	com.liferay.custom.chat.services.service.service,\
+	com.liferay.custom.chat.services.service.service.persistence
+-check: EXPORTS
+-includeresource: META-INF/service.xml=../chat-backend-service/service.xml

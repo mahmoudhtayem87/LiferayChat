@@ -1,0 +1,5 @@
+Bundle-Name: chatUserInterface
+Bundle-SymbolicName: com.liferay.custom.chat.ui
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.custom.chat.ui.constants
+Web-ContextPath: /chatUserInterface

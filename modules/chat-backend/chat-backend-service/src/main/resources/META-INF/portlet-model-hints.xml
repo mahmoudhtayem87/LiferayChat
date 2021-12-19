@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.custom.chat.services.service.model.ChatUser">
+		<field name="userId" type="long" />
+		<field name="fullName" type="String" />
+		<field name="avatar" type="String" />
+	</model>
+	<model name="com.liferay.custom.chat.services.service.model.Message">
+		<field name="messageId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="toUserId" type="long" />
+		<field name="fromUserId" type="long" />
+		<field name="messageType" type="String" />
+		<field name="messageText" type="String">
+			<hint name="max-length">200</hint>
+		</field>
+	</model>
+</model-hints>

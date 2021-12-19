@@ -1,0 +1,5 @@
+dependencies {
+	compile project(":modules:chat-backend:chat-backend-api")
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+	compileOnly group: "javax.websocket", name: "javax.websocket-api"
+}
