@@ -61,7 +61,7 @@ public interface ChatUserService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ChatUser> getUsers(ServiceContext serviceContext)
+	public List<ChatUser> getUsers(long groupId, ServiceContext serviceContext)
 		throws PortalException;
 
 }

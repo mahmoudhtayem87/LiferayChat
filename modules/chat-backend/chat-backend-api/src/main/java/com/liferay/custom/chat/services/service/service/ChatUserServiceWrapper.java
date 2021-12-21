@@ -43,10 +43,11 @@ public class ChatUserServiceWrapper
 	@Override
 	public java.util.List
 		<com.liferay.custom.chat.services.service.model.ChatUser> getUsers(
+				long groupId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _chatUserService.getUsers(serviceContext);
+		return _chatUserService.getUsers(groupId, serviceContext);
 	}
 
 	@Override

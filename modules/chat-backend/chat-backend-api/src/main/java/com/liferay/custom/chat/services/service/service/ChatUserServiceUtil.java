@@ -49,10 +49,11 @@ public class ChatUserServiceUtil {
 	}
 
 	public static List<ChatUser> getUsers(
+			long groupId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
-		return getService().getUsers(serviceContext);
+		return getService().getUsers(groupId, serviceContext);
 	}
 
 	public static ChatUserService getService() {

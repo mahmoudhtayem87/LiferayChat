@@ -41,6 +41,7 @@ export class LiferayService {
     {
         const serviceUrl = "/chat.chatuser/get-users";
         const serviceObject = {
+            groupId:Liferay.ThemeDisplay.getScopeGroupId()
         };
         return this.generateServicePromise(serviceUrl,serviceObject);
     }

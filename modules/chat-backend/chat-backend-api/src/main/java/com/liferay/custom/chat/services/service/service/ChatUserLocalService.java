@@ -254,7 +254,7 @@ public interface ChatUserLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ChatUser> getUsers(ServiceContext serviceContext)
+	public List<ChatUser> getUsers(long groupId, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

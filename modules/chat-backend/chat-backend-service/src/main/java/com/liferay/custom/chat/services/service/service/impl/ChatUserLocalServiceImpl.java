@@ -35,9 +35,9 @@ import java.util.List;
 	service = AopService.class
 )
 public class ChatUserLocalServiceImpl extends ChatUserLocalServiceBaseImpl {
-	public List<ChatUser> getUsers(ServiceContext serviceContext) throws PortalException, PortalException {
+	public List<ChatUser> getUsers(long groupId,ServiceContext serviceContext) throws PortalException, PortalException {
 		List<ChatUser> chatUsers = new ArrayList<ChatUser>();
-		long[] users = userLocalService.getGroupUserIds(serviceContext.getScopeGroupId());
+		long[] users = userLocalService.getGroupUserIds(groupId);
 		for (long userId: users
 		) {
 			User user = userLocalService.getUser(userId);

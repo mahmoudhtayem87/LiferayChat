@@ -53,7 +53,7 @@ public class ChatUserServiceHttp {
 
 	public static java.util.List
 		<com.liferay.custom.chat.services.service.model.ChatUser> getUsers(
-				HttpPrincipal httpPrincipal,
+				HttpPrincipal httpPrincipal, long groupId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -63,7 +63,7 @@ public class ChatUserServiceHttp {
 				_getUsersParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, serviceContext);
+				methodKey, groupId, serviceContext);
 
 			Object returnObj = null;
 
@@ -98,7 +98,7 @@ public class ChatUserServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(ChatUserServiceHttp.class);
 
 	private static final Class<?>[] _getUsersParameterTypes0 = new Class[] {
-		com.liferay.portal.kernel.service.ServiceContext.class
+		long.class, com.liferay.portal.kernel.service.ServiceContext.class
 	};
 
 }

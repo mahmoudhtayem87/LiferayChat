@@ -65,13 +65,15 @@ public class ChatUserServiceSoap {
 
 	public static com.liferay.custom.chat.services.service.model.ChatUserSoap[]
 			getUsers(
+				long groupId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
 		try {
 			java.util.List
 				<com.liferay.custom.chat.services.service.model.ChatUser>
-					returnValue = ChatUserServiceUtil.getUsers(serviceContext);
+					returnValue = ChatUserServiceUtil.getUsers(
+						groupId, serviceContext);
 
 			return com.liferay.custom.chat.services.service.model.ChatUserSoap.
 				toSoapModels(returnValue);
