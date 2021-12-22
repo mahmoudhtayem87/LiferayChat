@@ -35,6 +35,7 @@ public class ChatUserSoap implements Serializable {
 		soapModel.setUserId(model.getUserId());
 		soapModel.setFullName(model.getFullName());
 		soapModel.setAvatar(model.getAvatar());
+		soapModel.setBadge(model.getBadge());
 
 		return soapModel;
 	}
@@ -112,8 +113,17 @@ public class ChatUserSoap implements Serializable {
 		_avatar = avatar;
 	}
 
+	public int getBadge() {
+		return _badge;
+	}
+
+	public void setBadge(int badge) {
+		_badge = badge;
+	}
+
 	private long _userId;
 	private String _fullName;
 	private String _avatar;
+	private int _badge;
 
 }

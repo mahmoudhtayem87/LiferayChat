@@ -36,6 +36,8 @@ public class ChatUserTable extends BaseTable<ChatUserTable> {
 		"fullName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ChatUserTable, String> avatar = createColumn(
 		"avatar", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ChatUserTable, Integer> badge = createColumn(
+		"badge", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 
 	private ChatUserTable() {
 		super("CHAT_ChatUser", ChatUserTable::new);

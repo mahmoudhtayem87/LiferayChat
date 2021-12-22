@@ -270,6 +270,10 @@ public class MessageLocalServiceUtil {
 		return getService().getMessagesCount();
 	}
 
+	public static List<Object> getMessagesWith(long userId, boolean seen) {
+		return getService().getMessagesWith(userId, seen);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -286,6 +290,14 @@ public class MessageLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static Message markMessageSeen(
+			long messageId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().markMessageSeen(messageId, serviceContext);
 	}
 
 	/**

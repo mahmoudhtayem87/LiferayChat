@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for ChatUser. This utility wraps
@@ -273,7 +274,7 @@ public class ChatUserLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static List<ChatUser> getUsers(
+	public static Map<String, ChatUser> getUsers(
 			long groupId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {

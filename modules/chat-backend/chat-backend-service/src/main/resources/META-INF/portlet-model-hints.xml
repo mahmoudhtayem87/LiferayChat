@@ -5,6 +5,7 @@
 		<field name="userId" type="long" />
 		<field name="fullName" type="String" />
 		<field name="avatar" type="String" />
+		<field name="badge" type="int" />
 	</model>
 	<model name="com.liferay.custom.chat.services.service.model.Message">
 		<field name="messageId" type="long" />
@@ -20,5 +21,6 @@
 		<field name="messageText" type="String">
 			<hint name="max-length">200</hint>
 		</field>
+		<field name="seen" type="boolean" />
 	</model>
 </model-hints>

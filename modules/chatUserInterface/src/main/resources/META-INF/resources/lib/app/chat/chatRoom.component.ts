@@ -7,7 +7,7 @@ declare const Liferay: any;
 @Component({
     template:
         `
-            <div class="sidebar sidebar-light shadow-sm m-2  liferay-chat-container ">
+            <div class="sidebar sidebar-light shadow-sm m-2  liferay-chat-container" style="width: 100%!important;">
                 <div class="sidebar-header chat-room-header">
                     <nav class="component-tbar tbar">
                         <div class="container-fluid">
@@ -42,22 +42,15 @@ declare const Liferay: any;
                 <div class="sidebar-body ">
                     <div class="LrChat bg-light">
                         <div class="LrChat__wrapper px-4 mt-4">
-                            <div class=" chat_message chat-message {{getDateAlignment(msg)}}" *ngFor="let msg of Messages">
-                                <div class="avatar shadow-lg">
-                                    <img src="{{getAvatar(msg.fromUserId)}}" class="avatar" />
-                                </div>
-                                <div class="message">
-                                    <small class="part name">
-                                        {{getUserFullName(msg)}}
-                                    </small>
-                                    <div class="message-body part shadow-lg">
-                                        {{msg.messageText}}
-                                    </div>
-                                    <small class="part date">
-                                        {{msg.createDate | date:'medium'}}
-                                    </small>
-                                </div>
-                            </div>
+                            <chat-message [Alignment]="getDateAlignment(msg)" 
+                                          [FullName] = "getUserFullName(msg)"
+                                          [MessageText]="msg.messageText" 
+                                          [Date] = "msg.createDate"
+                                          [Seen]="msg.seen"
+                                          [MessageId]="msg.messageId" 
+                                          [Avatar]="getAvatar(msg.fromUserId)"
+                                          *ngFor="let msg of Messages">
+                            </chat-message>
                         </div>
                     </div>
                 </div>
@@ -123,7 +116,6 @@ export class chatRoomComponent implements OnInit {
         chatService.messages.subscribe(msg => {
             if (msg.messageType =="message" )
             {
-                console.log(msg);
                 if ( msg.toUserId == this.myUserId &&
                     msg.fromUserId == this.chatWithUserId )
                 {
@@ -151,7 +143,6 @@ export class chatRoomComponent implements OnInit {
             groupId: Liferay.ThemeDisplay.getScopeGroupId(),
             createDate:Date.now()
         };
-        console.log(_message);
         // @ts-ignore
         this.chatService.messages.next(_message);
         // @ts-ignore
@@ -174,7 +165,6 @@ export class chatRoomComponent implements OnInit {
         for(var index = 0 ; index < msgs?.length ; index++)
             this.msgsLst.push(msgs[index]);
         }
-        console.log(this.msgsLst);
 
     }
     get myUser()
@@ -194,8 +184,6 @@ export class chatRoomComponent implements OnInit {
         this.chatWithUserName = toUserID.fullName;
         this.chatWithUserAvatar  = toUserID.avatar ;
         this.myUserId = this.fromUserId.userId;
-        console.log(this.fromUserId);
-        console.log(this.chatRoomParticipants);
         this.getChatHistory();
     }
 

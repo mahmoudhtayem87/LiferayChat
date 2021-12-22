@@ -24,9 +24,13 @@
 		<column name="fromUserId" type="long"></column>
 		<column name="messageType" type="String"></column>
 		<column name="messageText" type="String"></column>
+		<column name="seen" type="boolean"></column>
 		<finder name="MessagesBetween" return-type="Collection">
 			<finder-column name="toUserId"></finder-column>
 			<finder-column name="fromUserId"></finder-column>
+		</finder>
+		<finder name="MessageId" return-type="Message">
+			<finder-column name="messageId"></finder-column>
 		</finder>
 
 		<!-- References -->
@@ -39,5 +43,6 @@
 		<column name="userId" type="long" primary="true"></column>
 		<column name="fullName" type="String"></column>
 		<column name="avatar" type="String"></column>
+		<column name="badge" type="int"></column>
 	</entity>
 </service-builder>

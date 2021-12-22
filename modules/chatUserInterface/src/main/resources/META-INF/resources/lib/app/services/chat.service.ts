@@ -16,6 +16,7 @@ export interface Message {
     messageText:string;
     groupId: string;
     createDate:Date;
+    seen:boolean;
 }
 
 
@@ -33,7 +34,8 @@ export class ChatService {
                     messageText:data.messageText,
                     groupId:data.groupId,
                     fromUserId:data.fromUserId,
-                    createDate:new Date(data.createDate)
+                    createDate:new Date(data.createDate),
+                    seen:data.seen
                 };
             }));
     }

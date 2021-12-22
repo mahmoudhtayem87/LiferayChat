@@ -1,11 +1,23 @@
 <%@ include file="/init.jsp" %>
 
+<script type="text/javascript">
+
+		var notification_audio = new Audio('<%= request.getContextPath() %>/alerts/toast_sound.mp3');
+</script>
 <style>
 	.liferay-chat-container
 	{
 		height: 100% !important;
+		width: 100% !important;
 	}
-	.liferay-chat-container .contacts-list
+	@media (min-width: 768px)
+	{
+		.sidebar.liferay-chat-container
+		{
+			width: 100% !important;
+		}
+	}
+		.liferay-chat-container .contacts-list
 	{
 		max-height: 50vh!important;
 		min-height: 50vh!important;

@@ -17,7 +17,7 @@ package com.liferay.custom.chat.services.service.service;
 import com.liferay.custom.chat.services.service.model.ChatUser;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service utility for ChatUser. This utility wraps
@@ -48,7 +48,7 @@ public class ChatUserServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static List<ChatUser> getUsers(
+	public static Map<String, ChatUser> getUsers(
 			long groupId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {

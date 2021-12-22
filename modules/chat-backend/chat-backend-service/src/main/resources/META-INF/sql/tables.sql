@@ -1,7 +1,8 @@
 create table CHAT_ChatUser (
 	userId LONG not null primary key,
 	fullName VARCHAR(75) null,
-	avatar VARCHAR(75) null
+	avatar VARCHAR(75) null,
+	badge INTEGER
 );
 
 create table CHAT_Message (
@@ -15,5 +16,6 @@ create table CHAT_Message (
 	toUserId LONG,
 	fromUserId LONG,
 	messageType VARCHAR(75) null,
-	messageText VARCHAR(200) null
+	messageText VARCHAR(200) null,
+	seen BOOLEAN
 );

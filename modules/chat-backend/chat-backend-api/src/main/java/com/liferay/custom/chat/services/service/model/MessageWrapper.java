@@ -53,6 +53,7 @@ public class MessageWrapper
 		attributes.put("fromUserId", getFromUserId());
 		attributes.put("messageType", getMessageType());
 		attributes.put("messageText", getMessageText());
+		attributes.put("seen", isSeen());
 
 		return attributes;
 	}
@@ -123,6 +124,12 @@ public class MessageWrapper
 
 		if (messageText != null) {
 			setMessageText(messageText);
+		}
+
+		Boolean seen = (Boolean)attributes.get("seen");
+
+		if (seen != null) {
+			setSeen(seen);
 		}
 	}
 
@@ -232,6 +239,16 @@ public class MessageWrapper
 	}
 
 	/**
+	 * Returns the seen of this message.
+	 *
+	 * @return the seen of this message
+	 */
+	@Override
+	public boolean getSeen() {
+		return model.getSeen();
+	}
+
+	/**
 	 * Returns the to user ID of this message.
 	 *
 	 * @return the to user ID of this message
@@ -279,6 +296,16 @@ public class MessageWrapper
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
+	}
+
+	/**
+	 * Returns <code>true</code> if this message is seen.
+	 *
+	 * @return <code>true</code> if this message is seen; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isSeen() {
+		return model.isSeen();
 	}
 
 	@Override
@@ -384,6 +411,16 @@ public class MessageWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets whether this message is seen.
+	 *
+	 * @param seen the seen of this message
+	 */
+	@Override
+	public void setSeen(boolean seen) {
+		model.setSeen(seen);
 	}
 
 	/**

@@ -51,10 +51,12 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 public class ChatUserServiceHttp {
 
-	public static java.util.List
-		<com.liferay.custom.chat.services.service.model.ChatUser> getUsers(
-				HttpPrincipal httpPrincipal, long groupId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static java.util.Map
+		<String, com.liferay.custom.chat.services.service.model.ChatUser>
+				getUsers(
+					HttpPrincipal httpPrincipal, long groupId,
+					com.liferay.portal.kernel.service.ServiceContext
+						serviceContext)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -82,9 +84,10 @@ public class ChatUserServiceHttp {
 					exception);
 			}
 
-			return (java.util.List
-				<com.liferay.custom.chat.services.service.model.ChatUser>)
-					returnObj;
+			return (java.util.Map
+				<String,
+				 com.liferay.custom.chat.services.service.model.ChatUser>)
+					 returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {

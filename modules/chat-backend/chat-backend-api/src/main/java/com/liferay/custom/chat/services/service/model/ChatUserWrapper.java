@@ -44,6 +44,7 @@ public class ChatUserWrapper
 		attributes.put("userId", getUserId());
 		attributes.put("fullName", getFullName());
 		attributes.put("avatar", getAvatar());
+		attributes.put("badge", getBadge());
 
 		return attributes;
 	}
@@ -67,6 +68,12 @@ public class ChatUserWrapper
 		if (avatar != null) {
 			setAvatar(avatar);
 		}
+
+		Integer badge = (Integer)attributes.get("badge");
+
+		if (badge != null) {
+			setBadge(badge);
+		}
 	}
 
 	@Override
@@ -82,6 +89,16 @@ public class ChatUserWrapper
 	@Override
 	public String getAvatar() {
 		return model.getAvatar();
+	}
+
+	/**
+	 * Returns the badge of this chat user.
+	 *
+	 * @return the badge of this chat user
+	 */
+	@Override
+	public int getBadge() {
+		return model.getBadge();
 	}
 
 	/**
@@ -137,6 +154,16 @@ public class ChatUserWrapper
 	@Override
 	public void setAvatar(String avatar) {
 		model.setAvatar(avatar);
+	}
+
+	/**
+	 * Sets the badge of this chat user.
+	 *
+	 * @param badge the badge of this chat user
+	 */
+	@Override
+	public void setBadge(int badge) {
+		model.setBadge(badge);
 	}
 
 	/**

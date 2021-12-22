@@ -302,6 +302,11 @@ public class MessageLocalServiceWrapper
 		return _messageLocalService.getMessagesCount();
 	}
 
+	@Override
+	public java.util.List<Object> getMessagesWith(long userId, boolean seen) {
+		return _messageLocalService.getMessagesWith(userId, seen);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -321,6 +326,16 @@ public class MessageLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _messageLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.custom.chat.services.service.model.Message
+			markMessageSeen(
+				long messageId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _messageLocalService.markMessageSeen(messageId, serviceContext);
 	}
 
 	/**

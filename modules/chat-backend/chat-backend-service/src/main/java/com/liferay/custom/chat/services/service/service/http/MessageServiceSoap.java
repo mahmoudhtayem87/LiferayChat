@@ -104,6 +104,26 @@ public class MessageServiceSoap {
 		}
 	}
 
+	public static com.liferay.custom.chat.services.service.model.MessageSoap
+			markMessageSeen(
+				long messageId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.custom.chat.services.service.model.Message returnValue =
+				MessageServiceUtil.markMessageSeen(messageId, serviceContext);
+
+			return com.liferay.custom.chat.services.service.model.MessageSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(MessageServiceSoap.class);
 
 }

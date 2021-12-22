@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
-import java.util.List;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -61,7 +61,8 @@ public interface ChatUserService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ChatUser> getUsers(long groupId, ServiceContext serviceContext)
+	public Map<String, ChatUser> getUsers(
+			long groupId, ServiceContext serviceContext)
 		throws PortalException;
 
 }

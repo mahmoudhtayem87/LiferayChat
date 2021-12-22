@@ -310,10 +310,12 @@ public class ChatUserLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.custom.chat.services.service.model.ChatUser> getUsers(
-				long groupId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public java.util.Map
+		<String, com.liferay.custom.chat.services.service.model.ChatUser>
+				getUsers(
+					long groupId,
+					com.liferay.portal.kernel.service.ServiceContext
+						serviceContext)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _chatUserLocalService.getUsers(groupId, serviceContext);

@@ -59,7 +59,7 @@ public class ChatUserCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{userId=");
 		sb.append(userId);
@@ -67,6 +67,8 @@ public class ChatUserCacheModel
 		sb.append(fullName);
 		sb.append(", avatar=");
 		sb.append(avatar);
+		sb.append(", badge=");
+		sb.append(badge);
 		sb.append("}");
 
 		return sb.toString();
@@ -92,6 +94,8 @@ public class ChatUserCacheModel
 			chatUserImpl.setAvatar(avatar);
 		}
 
+		chatUserImpl.setBadge(badge);
+
 		chatUserImpl.resetOriginalValues();
 
 		return chatUserImpl;
@@ -102,6 +106,8 @@ public class ChatUserCacheModel
 		userId = objectInput.readLong();
 		fullName = objectInput.readUTF();
 		avatar = objectInput.readUTF();
+
+		badge = objectInput.readInt();
 	}
 
 	@Override
@@ -121,10 +127,13 @@ public class ChatUserCacheModel
 		else {
 			objectOutput.writeUTF(avatar);
 		}
+
+		objectOutput.writeInt(badge);
 	}
 
 	public long userId;
 	public String fullName;
 	public String avatar;
+	public int badge;
 
 }

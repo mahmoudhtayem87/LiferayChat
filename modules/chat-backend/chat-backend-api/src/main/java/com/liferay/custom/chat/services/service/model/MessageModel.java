@@ -271,6 +271,27 @@ public interface MessageModel
 	 */
 	public void setMessageText(String messageText);
 
+	/**
+	 * Returns the seen of this message.
+	 *
+	 * @return the seen of this message
+	 */
+	public boolean getSeen();
+
+	/**
+	 * Returns <code>true</code> if this message is seen.
+	 *
+	 * @return <code>true</code> if this message is seen; <code>false</code> otherwise
+	 */
+	public boolean isSeen();
+
+	/**
+	 * Sets whether this message is seen.
+	 *
+	 * @param seen the seen of this message
+	 */
+	public void setSeen(boolean seen);
+
 	@Override
 	public Message cloneWithOriginalValues();
 

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import org.osgi.service.component.annotations.Component;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Mahmoud Hussein Tayem
@@ -35,7 +36,7 @@ import java.util.List;
 	service = AopService.class
 )
 public class ChatUserServiceImpl extends ChatUserServiceBaseImpl {
-	public List<ChatUser> getUsers(long groupId,ServiceContext serviceContext) throws PortalException
+	public Map<String, ChatUser> getUsers(long groupId, ServiceContext serviceContext) throws PortalException
 	{
 		return this.chatUserLocalService.getUsers(groupId,serviceContext);
 	}

@@ -314,6 +314,66 @@ public class MessageUtil {
 	}
 
 	/**
+	 * Returns the message where messageId = &#63; or throws a <code>NoSuchMessageException</code> if it could not be found.
+	 *
+	 * @param messageId the message ID
+	 * @return the matching message
+	 * @throws NoSuchMessageException if a matching message could not be found
+	 */
+	public static Message findByMessageId(long messageId)
+		throws com.liferay.custom.chat.services.service.exception.
+			NoSuchMessageException {
+
+		return getPersistence().findByMessageId(messageId);
+	}
+
+	/**
+	 * Returns the message where messageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param messageId the message ID
+	 * @return the matching message, or <code>null</code> if a matching message could not be found
+	 */
+	public static Message fetchByMessageId(long messageId) {
+		return getPersistence().fetchByMessageId(messageId);
+	}
+
+	/**
+	 * Returns the message where messageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param messageId the message ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching message, or <code>null</code> if a matching message could not be found
+	 */
+	public static Message fetchByMessageId(
+		long messageId, boolean useFinderCache) {
+
+		return getPersistence().fetchByMessageId(messageId, useFinderCache);
+	}
+
+	/**
+	 * Removes the message where messageId = &#63; from the database.
+	 *
+	 * @param messageId the message ID
+	 * @return the message that was removed
+	 */
+	public static Message removeByMessageId(long messageId)
+		throws com.liferay.custom.chat.services.service.exception.
+			NoSuchMessageException {
+
+		return getPersistence().removeByMessageId(messageId);
+	}
+
+	/**
+	 * Returns the number of messages where messageId = &#63;.
+	 *
+	 * @param messageId the message ID
+	 * @return the number of matching messages
+	 */
+	public static int countByMessageId(long messageId) {
+		return getPersistence().countByMessageId(messageId);
+	}
+
+	/**
 	 * Caches the message in the entity cache if it is enabled.
 	 *
 	 * @param message the message

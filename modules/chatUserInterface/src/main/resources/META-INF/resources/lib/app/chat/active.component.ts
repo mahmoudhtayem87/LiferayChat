@@ -6,10 +6,11 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ChatService, Message} from "../services/chat.service";
 import {LiferayService} from "../services/liferay.service";
 declare const Liferay: any;
+declare const notification_audio:HTMLAudioElement;
 @Component({
     template:
         `
-            <div class="sidebar sidebar-light shadow-sm m-2  liferay-chat-container ">
+            <div class="sidebar sidebar-light shadow-sm m-2  liferay-chat-container "  style="width: 100%!important;">
                 <nav class="component-tbar tbar">
                     <div class="container-fluid">
                         <ul class="tbar-nav">
@@ -44,7 +45,10 @@ declare const Liferay: any;
                                     </p>
                                 </div>
                                 <div class="autofit-col  justify-content-center">
-                                    <fa-icon icon="envelope"   ></fa-icon>
+                                    <fa-icon icon="envelope" size="2x" ></fa-icon>
+                                    <span class="badge badge-primary" style="position: absolute;top: 0;right: 0;">
+                                        {{user.badge}}
+                                    </span>
                                 </div>
                             </li>
                             <li class="list-group-header">
@@ -60,7 +64,10 @@ declare const Liferay: any;
                                     </p>
                                 </div>
                                 <div class="autofit-col  justify-content-center">
-                                    <fa-icon icon="envelope"  ></fa-icon>
+                                    <fa-icon icon="envelope" size="2x" ></fa-icon>
+                                    <span class="badge badge-primary" style="position: absolute;top: 0;right: 0;">
+                                        {{user.badge}}
+                                    </span>
                                 </div>
                             </li>
                         </ul>
@@ -150,7 +157,8 @@ export class activeUsersComponent implements OnInit {
                 switch (msg.messageType)
                 {
                     case "message":
-                        this.msgsLst.push(msg);
+                        this.updateBadge(msg.fromUserId);
+                        notification_audio.play();
                         break;
                     case "activeUsers":
                         this.activeUsers = msg.data;
@@ -165,6 +173,19 @@ export class activeUsersComponent implements OnInit {
 
         }
 
+    }
+    updateBadge(fromUserID:any)
+    {
+        var user = this.onlineUsers.filter((user : any )=> user.userId === fromUserID);
+        if(user.length <= 0 )
+        {
+            user = this.onlineUsers.filter((user : any )=> user.userId === fromUserID)[0];
+            user.badge = parseInt(user.badge) +1;
+        }else
+        {
+            user = user[0];
+            user.badge = parseInt(user.badge) +1;
+        }
     }
     groupUsers(collection: any[], property: string): any[] {
         // prevents the application from breaking if the array of objects doesn't exist yet
@@ -192,7 +213,15 @@ export class activeUsersComponent implements OnInit {
         }
     }
     public async getUsers() {
-        this.usersList = await this.liferayService.getUsers();
+        var data = await this.liferayService.getUsers();
+        console.log(data);
+        this.usersList = [];
+        var users_ids = Object.keys(data);
+        for(var index = 0 ; index < users_ids.length ; index++)
+        {
+            this.usersList.push(data[users_ids[index]]);
+        }
+        console.log(this.usersList);
         this.chatService.messages.next(this.requestActiveUser);
     }
 

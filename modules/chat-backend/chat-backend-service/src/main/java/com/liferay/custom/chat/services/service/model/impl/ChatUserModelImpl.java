@@ -75,7 +75,7 @@ public class ChatUserModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"userId", Types.BIGINT}, {"fullName", Types.VARCHAR},
-		{"avatar", Types.VARCHAR}
+		{"avatar", Types.VARCHAR}, {"badge", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -85,10 +85,11 @@ public class ChatUserModelImpl
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("fullName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("avatar", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("badge", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CHAT_ChatUser (userId LONG not null primary key,fullName VARCHAR(75) null,avatar VARCHAR(75) null)";
+		"create table CHAT_ChatUser (userId LONG not null primary key,fullName VARCHAR(75) null,avatar VARCHAR(75) null,badge INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table CHAT_ChatUser";
 
@@ -142,6 +143,7 @@ public class ChatUserModelImpl
 		model.setUserId(soapModel.getUserId());
 		model.setFullName(soapModel.getFullName());
 		model.setAvatar(soapModel.getAvatar());
+		model.setBadge(soapModel.getBadge());
 
 		return model;
 	}
@@ -300,6 +302,9 @@ public class ChatUserModelImpl
 		attributeGetterFunctions.put("avatar", ChatUser::getAvatar);
 		attributeSetterBiConsumers.put(
 			"avatar", (BiConsumer<ChatUser, String>)ChatUser::setAvatar);
+		attributeGetterFunctions.put("badge", ChatUser::getBadge);
+		attributeSetterBiConsumers.put(
+			"badge", (BiConsumer<ChatUser, Integer>)ChatUser::setBadge);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -378,6 +383,21 @@ public class ChatUserModelImpl
 		_avatar = avatar;
 	}
 
+	@JSON
+	@Override
+	public int getBadge() {
+		return _badge;
+	}
+
+	@Override
+	public void setBadge(int badge) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_badge = badge;
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -437,6 +457,7 @@ public class ChatUserModelImpl
 		chatUserImpl.setUserId(getUserId());
 		chatUserImpl.setFullName(getFullName());
 		chatUserImpl.setAvatar(getAvatar());
+		chatUserImpl.setBadge(getBadge());
 
 		chatUserImpl.resetOriginalValues();
 
@@ -451,6 +472,7 @@ public class ChatUserModelImpl
 		chatUserImpl.setFullName(
 			this.<String>getColumnOriginalValue("fullName"));
 		chatUserImpl.setAvatar(this.<String>getColumnOriginalValue("avatar"));
+		chatUserImpl.setBadge(this.<Integer>getColumnOriginalValue("badge"));
 
 		return chatUserImpl;
 	}
@@ -543,6 +565,8 @@ public class ChatUserModelImpl
 		if ((avatar != null) && (avatar.length() == 0)) {
 			chatUserCacheModel.avatar = null;
 		}
+
+		chatUserCacheModel.badge = getBadge();
 
 		return chatUserCacheModel;
 	}
@@ -637,6 +661,7 @@ public class ChatUserModelImpl
 	private long _userId;
 	private String _fullName;
 	private String _avatar;
+	private int _badge;
 
 	public <T> T getColumnValue(String columnName) {
 		Function<ChatUser, Object> function = _attributeGetterFunctions.get(
@@ -668,6 +693,7 @@ public class ChatUserModelImpl
 		_columnOriginalValues.put("userId", _userId);
 		_columnOriginalValues.put("fullName", _fullName);
 		_columnOriginalValues.put("avatar", _avatar);
+		_columnOriginalValues.put("badge", _badge);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -686,6 +712,8 @@ public class ChatUserModelImpl
 		columnBitmasks.put("fullName", 2L);
 
 		columnBitmasks.put("avatar", 4L);
+
+		columnBitmasks.put("badge", 8L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

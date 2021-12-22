@@ -60,7 +60,7 @@ public class MessageCacheModel implements CacheModel<Message>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{messageId=");
 		sb.append(messageId);
@@ -84,6 +84,8 @@ public class MessageCacheModel implements CacheModel<Message>, Externalizable {
 		sb.append(messageType);
 		sb.append(", messageText=");
 		sb.append(messageText);
+		sb.append(", seen=");
+		sb.append(seen);
 		sb.append("}");
 
 		return sb.toString();
@@ -136,6 +138,8 @@ public class MessageCacheModel implements CacheModel<Message>, Externalizable {
 			messageImpl.setMessageText(messageText);
 		}
 
+		messageImpl.setSeen(seen);
+
 		messageImpl.resetOriginalValues();
 
 		return messageImpl;
@@ -159,6 +163,8 @@ public class MessageCacheModel implements CacheModel<Message>, Externalizable {
 		fromUserId = objectInput.readLong();
 		messageType = objectInput.readUTF();
 		messageText = objectInput.readUTF();
+
+		seen = objectInput.readBoolean();
 	}
 
 	@Override
@@ -198,6 +204,8 @@ public class MessageCacheModel implements CacheModel<Message>, Externalizable {
 		else {
 			objectOutput.writeUTF(messageText);
 		}
+
+		objectOutput.writeBoolean(seen);
 	}
 
 	public long messageId;
@@ -211,5 +219,6 @@ public class MessageCacheModel implements CacheModel<Message>, Externalizable {
 	public long fromUserId;
 	public String messageType;
 	public String messageText;
+	public boolean seen;
 
 }

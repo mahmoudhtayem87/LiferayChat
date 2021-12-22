@@ -18,7 +18,9 @@ import com.liferay.custom.chat.services.service.model.Message;
 import com.liferay.custom.chat.services.service.service.base.MessageServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
 import org.osgi.service.component.annotations.Component;
 import java.util.List;
 /**
@@ -36,8 +38,16 @@ public class MessageServiceImpl extends MessageServiceBaseImpl {
 	{
 		return this.messageLocalService.addMessage( fromUserId,  toUserId,  messageText,  messageType);
 	}
+	public List<Object> getUnreadMessagesWith(long userId)
+	{
+		return this.messageLocalService.getMessagesWith(userId,false);
+	}
 	public  List<Message> getMessagesBetween(long fromUserId, long toUserId)
 	{
 		return this.messageLocalService.getMessagesBetween(fromUserId,toUserId);
+	}
+	public Message markMessageSeen(long messageId, ServiceContext serviceContext) throws PortalException
+	{
+		return this.messageLocalService.markMessageSeen(messageId,serviceContext);
 	}
 }

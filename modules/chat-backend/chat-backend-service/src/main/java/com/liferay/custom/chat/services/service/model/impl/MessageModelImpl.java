@@ -80,7 +80,7 @@ public class MessageModelImpl
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"toUserId", Types.BIGINT},
 		{"fromUserId", Types.BIGINT}, {"messageType", Types.VARCHAR},
-		{"messageText", Types.VARCHAR}
+		{"messageText", Types.VARCHAR}, {"seen", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -98,10 +98,11 @@ public class MessageModelImpl
 		TABLE_COLUMNS_MAP.put("fromUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("messageType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("messageText", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("seen", Types.BOOLEAN);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CHAT_Message (messageId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,toUserId LONG,fromUserId LONG,messageType VARCHAR(75) null,messageText VARCHAR(200) null)";
+		"create table CHAT_Message (messageId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,toUserId LONG,fromUserId LONG,messageType VARCHAR(75) null,messageText VARCHAR(200) null,seen BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table CHAT_Message";
 
@@ -127,14 +128,13 @@ public class MessageModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TOUSERID_COLUMN_BITMASK = 2L;
+	public static final long MESSAGEID_COLUMN_BITMASK = 2L;
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *		#getColumnBitmask(String)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long MESSAGEID_COLUMN_BITMASK = 4L;
+	public static final long TOUSERID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -176,6 +176,7 @@ public class MessageModelImpl
 		model.setFromUserId(soapModel.getFromUserId());
 		model.setMessageType(soapModel.getMessageType());
 		model.setMessageText(soapModel.getMessageText());
+		model.setSeen(soapModel.isSeen());
 
 		return model;
 	}
@@ -360,6 +361,9 @@ public class MessageModelImpl
 		attributeSetterBiConsumers.put(
 			"messageText",
 			(BiConsumer<Message, String>)Message::setMessageText);
+		attributeGetterFunctions.put("seen", Message::getSeen);
+		attributeSetterBiConsumers.put(
+			"seen", (BiConsumer<Message, Boolean>)Message::setSeen);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -380,6 +384,16 @@ public class MessageModelImpl
 		}
 
 		_messageId = messageId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalMessageId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("messageId"));
 	}
 
 	@JSON
@@ -621,6 +635,27 @@ public class MessageModelImpl
 		_messageText = messageText;
 	}
 
+	@JSON
+	@Override
+	public boolean getSeen() {
+		return _seen;
+	}
+
+	@JSON
+	@Override
+	public boolean isSeen() {
+		return _seen;
+	}
+
+	@Override
+	public void setSeen(boolean seen) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_seen = seen;
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -688,6 +723,7 @@ public class MessageModelImpl
 		messageImpl.setFromUserId(getFromUserId());
 		messageImpl.setMessageType(getMessageType());
 		messageImpl.setMessageText(getMessageText());
+		messageImpl.setSeen(isSeen());
 
 		messageImpl.resetOriginalValues();
 
@@ -717,6 +753,7 @@ public class MessageModelImpl
 			this.<String>getColumnOriginalValue("messageType"));
 		messageImpl.setMessageText(
 			this.<String>getColumnOriginalValue("messageText"));
+		messageImpl.setSeen(this.<Boolean>getColumnOriginalValue("seen"));
 
 		return messageImpl;
 	}
@@ -848,6 +885,8 @@ public class MessageModelImpl
 			messageCacheModel.messageText = null;
 		}
 
+		messageCacheModel.seen = isSeen();
+
 		return messageCacheModel;
 	}
 
@@ -950,6 +989,7 @@ public class MessageModelImpl
 	private long _fromUserId;
 	private String _messageType;
 	private String _messageText;
+	private boolean _seen;
 
 	public <T> T getColumnValue(String columnName) {
 		Function<Message, Object> function = _attributeGetterFunctions.get(
@@ -989,6 +1029,7 @@ public class MessageModelImpl
 		_columnOriginalValues.put("fromUserId", _fromUserId);
 		_columnOriginalValues.put("messageType", _messageType);
 		_columnOriginalValues.put("messageText", _messageText);
+		_columnOriginalValues.put("seen", _seen);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -1023,6 +1064,8 @@ public class MessageModelImpl
 		columnBitmasks.put("messageType", 512L);
 
 		columnBitmasks.put("messageText", 1024L);
+
+		columnBitmasks.put("seen", 2048L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

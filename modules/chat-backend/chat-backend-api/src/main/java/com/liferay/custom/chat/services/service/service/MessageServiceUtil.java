@@ -62,6 +62,18 @@ public class MessageServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static List<Object> getUnreadMessagesWith(long userId) {
+		return getService().getUnreadMessagesWith(userId);
+	}
+
+	public static Message markMessageSeen(
+			long messageId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().markMessageSeen(messageId, serviceContext);
+	}
+
 	public static MessageService getService() {
 		return _service;
 	}

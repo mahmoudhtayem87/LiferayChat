@@ -14,15 +14,9 @@
 
 package com.liferay.custom.chat.services.service.service.http;
 
-import com.liferay.custom.chat.services.service.service.ChatUserServiceUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import java.rmi.RemoteException;
-
 /**
  * Provides the SOAP utility for the
- * <code>ChatUserServiceUtil</code> service
+ * <code>com.liferay.custom.chat.services.service.service.ChatUserServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -62,29 +56,4 @@ import java.rmi.RemoteException;
  */
 @Deprecated
 public class ChatUserServiceSoap {
-
-	public static com.liferay.custom.chat.services.service.model.ChatUserSoap[]
-			getUsers(
-				long groupId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			java.util.List
-				<com.liferay.custom.chat.services.service.model.ChatUser>
-					returnValue = ChatUserServiceUtil.getUsers(
-						groupId, serviceContext);
-
-			return com.liferay.custom.chat.services.service.model.ChatUserSoap.
-				toSoapModels(returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
-	private static Log _log = LogFactoryUtil.getLog(ChatUserServiceSoap.class);
-
 }

@@ -111,6 +111,20 @@ public interface ChatUserModel extends BaseModel<ChatUser> {
 	 */
 	public void setAvatar(String avatar);
 
+	/**
+	 * Returns the badge of this chat user.
+	 *
+	 * @return the badge of this chat user
+	 */
+	public int getBadge();
+
+	/**
+	 * Sets the badge of this chat user.
+	 *
+	 * @param badge the badge of this chat user
+	 */
+	public void setBadge(int badge);
+
 	@Override
 	public ChatUser cloneWithOriginalValues();
 

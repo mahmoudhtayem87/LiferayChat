@@ -27,7 +27,15 @@ export class LiferayService {
         };
         return this.generateServicePromise(serviceUrl,serviceObject);
     }
-    ////
+    public markMessageSeen(messageID:any)
+    {
+        const serviceUrl = "/chat.message/mark-message-seen";
+
+        const serviceObject = {
+            messageId: messageID
+        };
+        return this.generateServicePromise(serviceUrl,serviceObject);
+    }
     public getChatHistory(fromUserId: number,toUserId:number):Promise<any[] | undefined>
     {
         const serviceUrl = "/chat.message/get-messages-between";

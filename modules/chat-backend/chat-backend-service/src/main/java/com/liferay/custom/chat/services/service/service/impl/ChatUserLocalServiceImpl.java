@@ -15,6 +15,7 @@
 package com.liferay.custom.chat.services.service.service.impl;
 
 import com.liferay.custom.chat.services.service.model.ChatUser;
+import com.liferay.custom.chat.services.service.service.MessageService;
 import com.liferay.custom.chat.services.service.service.base.ChatUserLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 
@@ -23,9 +24,12 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.ServiceContext;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Mahmoud Hussein Tayem
@@ -35,8 +39,11 @@ import java.util.List;
 	service = AopService.class
 )
 public class ChatUserLocalServiceImpl extends ChatUserLocalServiceBaseImpl {
-	public List<ChatUser> getUsers(long groupId,ServiceContext serviceContext) throws PortalException, PortalException {
-		List<ChatUser> chatUsers = new ArrayList<ChatUser>();
+	public Map<String, ChatUser> getUsers(long groupId,ServiceContext serviceContext) throws PortalException, PortalException {
+
+		Map<String, ChatUser> users_map = new HashMap<String, ChatUser>();
+		long _userId = serviceContext.getUserId();
+		List<Object> badges = messageService.getUnreadMessagesWith(_userId);
 		long[] users = userLocalService.getGroupUserIds(groupId);
 		for (long userId: users
 		) {
@@ -47,9 +54,17 @@ public class ChatUserLocalServiceImpl extends ChatUserLocalServiceBaseImpl {
 							("",user.isMale(),user.getPortraitId(),user.getUserUuid());
 			chatUser.setFullName(user.getFullName());
 			chatUser.setAvatar(userAvatar);
-			chatUsers.add(chatUser);
+			users_map.put(userId+"",chatUser);
+		}
+		for(Object badge : badges)
+		{
+			System.out.println(badge.toString());
+			Object[] info = (Object[])badge;
+			users_map.get(info[0].toString()).setBadge(Integer.parseInt(info[1].toString()));
 		}
 
-		return chatUsers;
+		return users_map;
 	}
+	@Reference
+	MessageService messageService;
 }

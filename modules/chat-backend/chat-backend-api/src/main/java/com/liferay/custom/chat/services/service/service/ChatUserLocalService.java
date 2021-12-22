@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -254,7 +255,8 @@ public interface ChatUserLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ChatUser> getUsers(long groupId, ServiceContext serviceContext)
+	public Map<String, ChatUser> getUsers(
+			long groupId, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

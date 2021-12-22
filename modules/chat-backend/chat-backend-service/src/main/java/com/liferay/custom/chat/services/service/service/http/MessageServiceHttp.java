@@ -94,6 +94,37 @@ public class MessageServiceHttp {
 		}
 	}
 
+	public static java.util.List<Object> getUnreadMessagesWith(
+		HttpPrincipal httpPrincipal, long userId) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				MessageServiceUtil.class, "getUnreadMessagesWith",
+				_getUnreadMessagesWithParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, userId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List<Object>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static java.util.List
 		<com.liferay.custom.chat.services.service.model.Message>
 			getMessagesBetween(
@@ -102,7 +133,7 @@ public class MessageServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				MessageServiceUtil.class, "getMessagesBetween",
-				_getMessagesBetweenParameterTypes1);
+				_getMessagesBetweenParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fromUserId, toUserId);
@@ -130,12 +161,61 @@ public class MessageServiceHttp {
 		}
 	}
 
+	public static com.liferay.custom.chat.services.service.model.Message
+			markMessageSeen(
+				HttpPrincipal httpPrincipal, long messageId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				MessageServiceUtil.class, "markMessageSeen",
+				_markMessageSeenParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, messageId, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.custom.chat.services.service.model.Message)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(MessageServiceHttp.class);
 
 	private static final Class<?>[] _addMessageParameterTypes0 = new Class[] {
 		String.class, String.class, String.class, String.class
 	};
-	private static final Class<?>[] _getMessagesBetweenParameterTypes1 =
+	private static final Class<?>[] _getUnreadMessagesWithParameterTypes1 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getMessagesBetweenParameterTypes2 =
 		new Class[] {long.class, long.class};
+	private static final Class<?>[] _markMessageSeenParameterTypes3 =
+		new Class[] {
+			long.class, com.liferay.portal.kernel.service.ServiceContext.class
+		};
 
 }

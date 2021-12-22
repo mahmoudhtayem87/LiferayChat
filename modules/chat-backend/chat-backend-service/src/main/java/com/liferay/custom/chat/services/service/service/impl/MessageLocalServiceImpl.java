@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
 import org.osgi.service.component.annotations.Component;
 
 import java.util.Date;
@@ -66,7 +67,23 @@ public class MessageLocalServiceImpl extends MessageLocalServiceBaseImpl {
 		dynamicQuery.addOrder(OrderFactoryUtil.asc("createDate"));
 		return dynamicQuery;
 	}
-
+	public List<Object> getMessagesWith(long userId,boolean seen) {
+		DynamicQuery dynamicQuery = super.dynamicQuery();
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("toUserId", userId));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("seen", seen));
+		ProjectionList projectionList = ProjectionFactoryUtil.projectionList();
+		projectionList.add(ProjectionFactoryUtil.groupProperty("fromUserId"));
+		projectionList.add(ProjectionFactoryUtil.rowCount());
+		dynamicQuery.setProjection(projectionList);
+		return super.dynamicQuery(dynamicQuery) ;
+	}
+	public Message markMessageSeen(long messageId, ServiceContext serviceContext) throws PortalException {
+		long userId = serviceContext.getUserId();
+		Message msg = getMessage(messageId);
+		if(msg.getToUserId() == userId)
+			msg.setSeen(true);
+		return super.updateMessage(msg);
+	}
 	public List<Message> getMessagesBetween(long fromUserId, long toUserId)
 	{
 		Object[] data = new Object[2];

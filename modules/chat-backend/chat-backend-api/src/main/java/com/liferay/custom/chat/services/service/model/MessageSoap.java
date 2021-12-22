@@ -44,6 +44,7 @@ public class MessageSoap implements Serializable {
 		soapModel.setFromUserId(model.getFromUserId());
 		soapModel.setMessageType(model.getMessageType());
 		soapModel.setMessageText(model.getMessageText());
+		soapModel.setSeen(model.isSeen());
 
 		return soapModel;
 	}
@@ -185,6 +186,18 @@ public class MessageSoap implements Serializable {
 		_messageText = messageText;
 	}
 
+	public boolean getSeen() {
+		return _seen;
+	}
+
+	public boolean isSeen() {
+		return _seen;
+	}
+
+	public void setSeen(boolean seen) {
+		_seen = seen;
+	}
+
 	private long _messageId;
 	private long _groupId;
 	private long _companyId;
@@ -196,5 +209,6 @@ public class MessageSoap implements Serializable {
 	private long _fromUserId;
 	private String _messageType;
 	private String _messageText;
+	private boolean _seen;
 
 }

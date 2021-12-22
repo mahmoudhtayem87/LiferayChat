@@ -54,6 +54,8 @@ public class MessageTable extends BaseTable<MessageTable> {
 		"messageType", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<MessageTable, String> messageText = createColumn(
 		"messageText", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<MessageTable, Boolean> seen = createColumn(
+		"seen", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 
 	private MessageTable() {
 		super("CHAT_Message", MessageTable::new);

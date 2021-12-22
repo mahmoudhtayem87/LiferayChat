@@ -59,6 +59,21 @@ public class MessageServiceWrapper
 	}
 
 	@Override
+	public java.util.List<Object> getUnreadMessagesWith(long userId) {
+		return _messageService.getUnreadMessagesWith(userId);
+	}
+
+	@Override
+	public com.liferay.custom.chat.services.service.model.Message
+			markMessageSeen(
+				long messageId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _messageService.markMessageSeen(messageId, serviceContext);
+	}
+
+	@Override
 	public MessageService getWrappedService() {
 		return _messageService;
 	}

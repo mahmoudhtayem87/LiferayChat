@@ -43,11 +43,13 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -627,6 +629,217 @@ public class MessagePersistenceImpl
 	private static final String _FINDER_COLUMN_MESSAGESBETWEEN_FROMUSERID_2 =
 		"message.fromUserId = ?";
 
+	private FinderPath _finderPathFetchByMessageId;
+	private FinderPath _finderPathCountByMessageId;
+
+	/**
+	 * Returns the message where messageId = &#63; or throws a <code>NoSuchMessageException</code> if it could not be found.
+	 *
+	 * @param messageId the message ID
+	 * @return the matching message
+	 * @throws NoSuchMessageException if a matching message could not be found
+	 */
+	@Override
+	public Message findByMessageId(long messageId)
+		throws NoSuchMessageException {
+
+		Message message = fetchByMessageId(messageId);
+
+		if (message == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("messageId=");
+			sb.append(messageId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchMessageException(sb.toString());
+		}
+
+		return message;
+	}
+
+	/**
+	 * Returns the message where messageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param messageId the message ID
+	 * @return the matching message, or <code>null</code> if a matching message could not be found
+	 */
+	@Override
+	public Message fetchByMessageId(long messageId) {
+		return fetchByMessageId(messageId, true);
+	}
+
+	/**
+	 * Returns the message where messageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param messageId the message ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching message, or <code>null</code> if a matching message could not be found
+	 */
+	@Override
+	public Message fetchByMessageId(long messageId, boolean useFinderCache) {
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {messageId};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByMessageId, finderArgs);
+		}
+
+		if (result instanceof Message) {
+			Message message = (Message)result;
+
+			if (messageId != message.getMessageId()) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_SELECT_MESSAGE_WHERE);
+
+			sb.append(_FINDER_COLUMN_MESSAGEID_MESSAGEID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(messageId);
+
+				List<Message> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByMessageId, finderArgs, list);
+					}
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {messageId};
+							}
+
+							_log.warn(
+								"MessagePersistenceImpl.fetchByMessageId(long, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					Message message = list.get(0);
+
+					result = message;
+
+					cacheResult(message);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Message)result;
+		}
+	}
+
+	/**
+	 * Removes the message where messageId = &#63; from the database.
+	 *
+	 * @param messageId the message ID
+	 * @return the message that was removed
+	 */
+	@Override
+	public Message removeByMessageId(long messageId)
+		throws NoSuchMessageException {
+
+		Message message = findByMessageId(messageId);
+
+		return remove(message);
+	}
+
+	/**
+	 * Returns the number of messages where messageId = &#63;.
+	 *
+	 * @param messageId the message ID
+	 * @return the number of matching messages
+	 */
+	@Override
+	public int countByMessageId(long messageId) {
+		FinderPath finderPath = _finderPathCountByMessageId;
+
+		Object[] finderArgs = new Object[] {messageId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_MESSAGE_WHERE);
+
+			sb.append(_FINDER_COLUMN_MESSAGEID_MESSAGEID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(messageId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_MESSAGEID_MESSAGEID_2 =
+		"message.messageId = ?";
+
 	public MessagePersistenceImpl() {
 		setModelClass(Message.class);
 
@@ -645,6 +858,10 @@ public class MessagePersistenceImpl
 	public void cacheResult(Message message) {
 		entityCache.putResult(
 			MessageImpl.class, message.getPrimaryKey(), message);
+
+		finderCache.putResult(
+			_finderPathFetchByMessageId, new Object[] {message.getMessageId()},
+			message);
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -712,6 +929,15 @@ public class MessagePersistenceImpl
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(MessageImpl.class, primaryKey);
 		}
+	}
+
+	protected void cacheUniqueFindersCache(MessageModelImpl messageModelImpl) {
+		Object[] args = new Object[] {messageModelImpl.getMessageId()};
+
+		finderCache.putResult(
+			_finderPathCountByMessageId, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByMessageId, args, messageModelImpl);
 	}
 
 	/**
@@ -880,6 +1106,8 @@ public class MessagePersistenceImpl
 		}
 
 		entityCache.putResult(MessageImpl.class, messageModelImpl, false, true);
+
+		cacheUniqueFindersCache(messageModelImpl);
 
 		if (isNew) {
 			message.setNew(false);
@@ -1176,6 +1404,16 @@ public class MessagePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByMessagesBetween",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"toUserId", "fromUserId"}, false);
+
+		_finderPathFetchByMessageId = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByMessageId",
+			new String[] {Long.class.getName()}, new String[] {"messageId"},
+			true);
+
+		_finderPathCountByMessageId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByMessageId",
+			new String[] {Long.class.getName()}, new String[] {"messageId"},
+			false);
 	}
 
 	@Deactivate
