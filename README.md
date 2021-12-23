@@ -8,8 +8,8 @@ This project has been implemented to demonstrate how we can utilize the web sock
 - **User Interface Module**: i have used angular to implement the user interface.
 
 ###### To Do
-- Add the unread messages counter
-- Enhance the user interface
+- ~~Add the unread messages counter~~
+- ~~Enhance the user interface~~
 - Secure the service builder apis.
 
 ### Deployment Order
