@@ -31,6 +31,7 @@ import {chatRoomComponent} from "./chat/chatRoom.component";
 import {GroupByPipe} from "./pipe/group-by.pipe";
 import {FilterPipe} from "./pipe/filter.pipe";
 import {chatMessageComponent} from "./chat/chatMessage.component";
+import {userItemComponent} from "./chat/userItem.component";
 
 declare const Liferay: any;
 @NgModule({
@@ -48,6 +49,7 @@ declare const Liferay: any;
 		chatRoomComponent,
 		activeUsersComponent,
 		chatMessageComponent,
+		userItemComponent,
 		GroupByPipe,
 		FilterPipe
 	],

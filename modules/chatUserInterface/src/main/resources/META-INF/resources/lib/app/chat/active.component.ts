@@ -35,41 +35,21 @@ declare const notification_audio:HTMLAudioElement;
                             <li class="list-group-header">
                                 <h3 class="list-group-header-title">Online Users</h3>
                             </li>
-                            <li (click)="openChatRoom(user)" class="list-group-item list-group-item-flex user-list-item" *ngFor="let user of onlineUsers | filter:'fullName':searchTerm">
-                                <div class="autofit-col  justify-content-center">
-                                    <img class="avatar online-avatar" src="{{user.avatar}}" />
-                                </div>
-                                <div class="autofit-col autofit-col-expand justify-content-center">
-                                    <p class="list-group-title text-truncate">
-                                        <label>{{user.fullName}}</label>
-                                    </p>
-                                </div>
-                                <div class="autofit-col  justify-content-center">
-                                    <fa-icon icon="envelope" size="2x" ></fa-icon>
-                                    <span class="badge badge-primary" style="position: absolute;top: 0;right: 0;">
-                                        {{user.badge}}
-                                    </span>
-                                </div>
-                            </li>
+                            <user-item (click)="openChatRoom(user)" *ngFor="let user of onlineUsers | filter:'fullName':searchTerm"
+                                       [FullName]="user.fullName"
+                                       [Status]="'online'"
+                                       [Avatar]="user.avatar"
+                                       [Badge]="user.badge">
+                            </user-item>
                             <li class="list-group-header">
                                 <h3 class="list-group-header-title">Offline Users</h3>
                             </li>
-                            <li (click)="openChatRoom(user)" class="list-group-item list-group-item-flex user-list-item" *ngFor="let user of offlineUsers | filter:'fullName':searchTerm">
-                                <div class="autofit-col  justify-content-center">
-                                    <img class="avatar offline-avatar" src="{{user.avatar}}" />
-                                </div>
-                                <div class="autofit-col autofit-col-expand justify-content-center">
-                                    <p class="list-group-title text-truncate">
-                                        <label>{{user.fullName}}</label>
-                                    </p>
-                                </div>
-                                <div class="autofit-col  justify-content-center">
-                                    <fa-icon icon="envelope" size="2x" ></fa-icon>
-                                    <span class="badge badge-primary" style="position: absolute;top: 0;right: 0;">
-                                        {{user.badge}}
-                                    </span>
-                                </div>
-                            </li>
+                            <user-item (click)="openChatRoom(user)" *ngFor="let user of offlineUsers | filter:'fullName':searchTerm"
+                                       [FullName]="user.fullName"
+                                       [Status]="'offline'"
+                                       [Avatar]="user.avatar"
+                                       [Badge]="user.badge">
+                            </user-item>
                         </ul>
                     </div>
                 </div>
